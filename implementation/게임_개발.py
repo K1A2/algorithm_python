@@ -34,5 +34,4 @@ while True:
     checked[check_y][check_x] = True
     pos = [check_y, check_x]
     cant = 0
-    print(pos)
 print(count)
