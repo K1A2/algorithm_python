@@ -1,0 +1,1 @@
+print(sum([(lambda k:40 if k < 40 else k)(int(input())) for _ in range(5)]) // 5)
