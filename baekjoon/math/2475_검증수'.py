@@ -1,0 +1,1 @@
+print((lambda x:sum([i**2 for i in x]))(list(map(int,input().split())))%10)
