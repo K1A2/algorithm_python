@@ -6,6 +6,7 @@
 1. [그리디](/greedy/)
 2. [구현](/implementation/)
 3. [DFS/BFS](/dfs_bfs/)
+4. [정렬](/sort/)
 
 ## 문제 출처
 * [프로그래머스](https://programmers.co.kr/)
