@@ -1,6 +1,6 @@
 def findA(s, start):
     count = 0
-    for i in len(start, len(s)):
+    for i in range(start, len(s)):
         if start[i] == 'A':
             count += 1
         else:
