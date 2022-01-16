@@ -9,6 +9,7 @@
 4. [정렬](/sort/)
 5. [이진탐색](/binary_search/)
 6. [다이나믹 프로그래밍](/dynamic_programming/)
+7. [최단 경로](/shortest_path/)
 
 ## 문제 출처
 * [프로그래머스](https://programmers.co.kr/)
