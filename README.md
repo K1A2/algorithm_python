@@ -13,6 +13,7 @@
 
 ## 유형별 문제 풀이
 * [백준 문제 풀이](/baekjoon/)
+* [프로그래머스 문제 풀이](/programmers/)
 
 ## 문제 출처
 * [프로그래머스](https://programmers.co.kr/)
