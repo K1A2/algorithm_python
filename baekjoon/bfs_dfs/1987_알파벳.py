@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 n, m = map(int, sys.stdin.readline().rstrip().split())
 data = [list(sys.stdin.readline().rstrip()) for _ in range(n)]
 check = {data[0][0]}
