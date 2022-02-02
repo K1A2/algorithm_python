@@ -5,6 +5,7 @@ d = deque()
 def backtracking():
     if len(d) == b:
         print(*d)
+        return
     for i in range(1, a + 1):
         if i in d:
             continue

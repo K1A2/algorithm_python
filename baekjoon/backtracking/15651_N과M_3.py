@@ -2,12 +2,12 @@ import sys
 from collections import deque
 a, b = map(int, sys.stdin.readline().rstrip().split())
 d = deque()
-def backtracking(n):
+def backtracking():
     if len(d) == b:
         print(*d)
         return
-    for i in range(n, a + 1):
+    for i in range(1, a + 1):
         d.append(i)
-        backtracking(i + 1)
+        backtracking()
         d.pop()
-backtracking(1)
+backtracking()
