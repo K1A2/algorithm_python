@@ -1,0 +1,2 @@
+a, b, c = map(int, input().split())
+print(10000 + a * 1000) if a == b == c else print(1000 + a * 100) if a == b != c else print(1000 + b * 100) if a != b == c else print(1000 + a * 100) if a == c != b else print(max(a, b, c) * 100)
