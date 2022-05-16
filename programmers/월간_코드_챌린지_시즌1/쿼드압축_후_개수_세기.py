@@ -17,7 +17,7 @@ def quad(zero, one, arr, from_x, from_y, to_x, to_y):
         for y in range(from_y, to_y + 1):
             if arr[x][y] != key:
                 is_type = -1
-                break;
+                break
     if is_type == -1:
         for nxy in divide_arr_idx(from_x, from_y, to_x, to_y):
             is_not = False
