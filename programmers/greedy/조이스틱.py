@@ -1,19 +1,36 @@
-def solution(name):
-    answer = 0
-    name = list(name)
-    n = len(name)
-    for i in range(n):
-        diff = ord(name[i]) - ord('A')
-        answer += min(diff, 26 - diff)
+def findA(s, start):
+    count = 0
+    for i in range(start, len(s)):
+        if start[i] == 'A':
+            count += 1
+        else:
+            break
+    if count > s + 1:
+        return True
+    else:
+        return False
 
+def solution(name):
+    is_gone = [False for _ in range(len(name))]
+    alphabet = ['A' for _ in range(len(name))]
+
+    cursor = 0
+    count = 0
+    direction = 1
+    while alphabet != name:
+        now_al, now_na = alphabet[cursor], name[cursor]
+        count += ord(now_na) - ord('A')
+        alphabet[cursor] = now_na
+        is_gone[cursor] = True
+
+        check = cursor + direction
+        if check >= len(name):
+            check = 0
+        elif check < 0:
+            check = len(name) - 1
+
+    answer = 0
     return answer
 
-print(solution("JEROEN"))
-print(solution("JAN"))
-
-def solution(S, K):
-    m = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    now_idx = m.index(S)
-    K %= 7
-    return m[now_idx + K if now_idx + K < 7 else 7 - (now_idx + K)]
-print(solution('Sat', 23))
+print(solution("JEROEN") == 56)
+print(solution("JAN") == 23)
