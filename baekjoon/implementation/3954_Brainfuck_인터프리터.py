@@ -25,7 +25,6 @@ for _ in range(int(input().rstrip())):
     max_execute = 50000000
     min_idx = c
     while count < max_execute:
-        # print('cc', now_bf)
         if brainfuck[now_bf] == '-':
             memory[pointer] -= 1
             if memory[pointer] == -1:
@@ -47,13 +46,10 @@ for _ in range(int(input().rstrip())):
                 now_bf = loop_pair_s[now_bf]
             else:
                 d.append(now_bf)
-            # print(d)
         elif brainfuck[now_bf] == ']':
-            # print('m', memory[pointer])
             if memory[pointer]:
                 now_bf = loop_pair_e[now_bf]
             else:
-                # print(d, now_bf)
                 d.pop()
         elif brainfuck[now_bf] == ',':
             if input_idx < i:
