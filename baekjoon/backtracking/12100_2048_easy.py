@@ -4,94 +4,95 @@ input = sys.stdin.readline
 n = int(input().rstrip())
 data = [list(map(int, input().rstrip().split())) for _ in range(n)]
 
-def left(data):
-    new_data = []
-    for i in data:
-        new_row = i[:]
-        last_zero_idx = 0
-        for j in range(1, n):
-            if new_row[j]:
-                if new_row[last_zero_idx] == new_row[j]:
-                    new_row[last_zero_idx] *= 2
-                    for k in range(last_zero_idx + 1, j + 1): new_row[k] = 0
-                    last_zero_idx += 1
+def left():
+    data_new = [i[:] for i in data]
+    for x in range(n):
+        y_less = 0
+        y_now = 1
+        while y_now < n:
+            if not data_new[x][y_now]:
+                y_now += 1
+                continue
+            if y_less == y_now:
+                y_now += 1
+            if data_new[x][y_less] == data_new[x][y_now]:
+                data_new[x][y_less] *= 2
+                data_new[x][y_now] = 0
+                y_less += 1
+            else:
+                if data_new[x][y_less]:
+                    if y_less + 1 != y_now:
+                        data_new[x][y_less + 1] = data_new[x][y_now]
+                        data_new[x][y_now] = 0
+                    y_less += 1
                 else:
-                    if not new_row[last_zero_idx]:
-                        new_row[last_zero_idx] = new_row[j]
-                        for k in range(last_zero_idx + 1, j + 1): new_row[k] = 0
-                    else:
-                        last_zero_idx += 1
-        new_data.append(new_row)
-    return new_data
+                    data_new[x][y_less] = data_new[x][y_now]
+                    data_new[x][y_now] = 0
+            y_now += 1
+    return data_new
 
-def right(data):
-    new_data = []
-    for i in data:
-        new_row = i[:]
-        last_zero_idx = n - 1
-        for j in range(n - 2, -1, -1):
-            if new_row[j]:
-                if new_row[last_zero_idx] == new_row[j]:
-                    new_row[last_zero_idx] *= 2
-                    for k in range(j, last_zero_idx): new_row[k] = 0
-                    last_zero_idx -= 1
+def right():
+    data_new = [i[:] for i in data]
+    for x in range(n):
+        y_max = n - 1
+        y_now = n - 2
+        while y_now >= 0:
+            if not data_new[x][y_now]:
+                y_now -= 1
+                continue
+            if y_max == y_now:
+                y_now -= 1
+            if data_new[x][y_max] == data_new[x][y_now]:
+                data_new[x][y_max] *= 2
+                data_new[x][y_now] = 0
+                y_max -= 1
+            else:
+                if data_new[x][y_max]:
+                    if y_max - 1 != y_now:
+                        data_new[x][y_max - 1] = data_new[x][y_now]
+                        data_new[x][y_now] = 0
+                    y_max -= 1
                 else:
-                    if not new_row[last_zero_idx]:
-                        new_row[last_zero_idx] = new_row[j]
-                        for k in range(j, last_zero_idx): new_row[k] = 0
-                    else:
-                        last_zero_idx -= 1
-        new_data.append(new_row)
-    return new_data
+                    data_new[x][y_max] = data_new[x][y_now]
+                    data_new[x][y_now] = 0
+            y_now -= 1
+    return data_new
 
-def up(data):
-    new_data = []
-    for i in data:
-        new_data.append(i[:])
-    for i in range(n):
-        last_zero_idx = 0
-        for j in range(1, n):
-            if new_data[j][i]:
-                if new_data[last_zero_idx][i] == new_data[j][i]:
-                    new_data[last_zero_idx][i] *= 2
-                    for k in range(last_zero_idx + 1, j + 1): new_data[k][i] = 0
-                    last_zero_idx += 1
+def up():
+    data_new = [i[:] for i in data]
+    for y in range(n):
+        x_less = 0
+        x_now = 1
+        while x_now < n:
+            if not data_new[x_now][y]:
+                x_now += 1
+                continue
+            if x_less == x_now:
+                x_now += 1
+            if data_new[x_less][y] == data_new[x_now][y]:
+                data_new[x_less][y] *= 2
+                data_new[x_now][y] = 0
+                x_less += 1
+            else:
+                if data_new[x_less][y]:
+                    if x_less + 1 != x_now:
+                        data_new[x_less + 1][y] = data_new[x_now][y]
+                        data_new[x_now][y] = 0
+                    x_less += 1
                 else:
-                    if not new_data[last_zero_idx][i]:
-                        new_data[last_zero_idx][i] = new_data[j][i]
-                        for k in range(last_zero_idx + 1, j + 1): new_data[k][i] = 0
-                    else:
-                        last_zero_idx += 1
-    return new_data
+                    data_new[x_less][y] = data_new[x_now][y]
+                    data_new[x_now][y] = 0
+            x_now += 1
+    return data_new
 
-def down(data):
-    new_data = []
-    for i in data:
-        new_data.append(i[:])
-    for i in range(n):
-        last_zero_idx = n - 1
-        for j in range(n - 2, -1, -1):
-            if new_data[j][i]:
-                if new_data[last_zero_idx][i] == new_data[j][i]:
-                    new_data[last_zero_idx][i] *= 2
-                    for k in range(j, last_zero_idx): new_data[k][i] = 0
-                    last_zero_idx -= 1
-                else:
-                    if not new_data[last_zero_idx][i]:
-                        new_data[last_zero_idx][i] = new_data[j][i]
-                        for k in range(j, last_zero_idx): new_data[k][i] = 0
-                    else:
-                        last_zero_idx -= 1
-    return new_data
+def down():
+    pass
 
-# def backtracking(data_copy, depth, ans):
-#     if depth == 5:
-#         return max((ans, max([max(i) for i in data_copy])))
+def print_board(d):
+    for i in d:
+        print(' '.join(list(map(str, i))))
+    print()
 
-
-# print(backtracking((data)))
-
-print(left(data))
-print(right(data))
-print(up(data))
-print(down(data))
+print_board(left())
+print_board(right())
+print_board(up())
