@@ -4,7 +4,7 @@ input = sys.stdin.readline
 n = int(input().rstrip())
 data = [list(map(int, input().rstrip().split())) for _ in range(n)]
 
-def left():
+def left(data):
     data_new = [i[:] for i in data]
     for x in range(n):
         y_less = 0
@@ -31,7 +31,7 @@ def left():
             y_now += 1
     return data_new
 
-def right():
+def right(data):
     data_new = [i[:] for i in data]
     for x in range(n):
         y_max = n - 1
@@ -58,7 +58,7 @@ def right():
             y_now -= 1
     return data_new
 
-def up():
+def up(data):
     data_new = [i[:] for i in data]
     for y in range(n):
         x_less = 0
@@ -85,14 +85,38 @@ def up():
             x_now += 1
     return data_new
 
-def down():
-    pass
+def down(data):
+    data_new = [i[:] for i in data]
+    for y in range(n):
+        x_max = n - 1
+        x_now = n - 2
+        while x_now >= 0:
+            if not data_new[x_now][y]:
+                x_now -= 1
+                continue
+            if x_max == x_now:
+                x_now -= 1
+            if data_new[x_max][y] == data_new[x_now][y]:
+                data_new[x_max][y] *= 2
+                data_new[x_now][y] = 0
+                x_max -= 1
+            else:
+                if data_new[x_max][y]:
+                    if x_max - 1 != x_now:
+                        data_new[x_max - 1][y] = data_new[x_now][y]
+                        data_new[x_now][y] = 0
+                    x_max -= 1
+                else:
+                    data_new[x_max][y] = data_new[x_now][y]
+                    data_new[x_now][y] = 0
+            x_now -= 1
+    return data_new
 
-def print_board(d):
-    for i in d:
-        print(' '.join(list(map(str, i))))
-    print()
+def backtracking(depth, data, res):
+    if depth == 5:
+        return max(res, max([max(i) for i in data]))
+    for func in [left, right, up, down]:
+        res = backtracking(depth + 1, func(data), res)
+    return res
 
-print_board(left())
-print_board(right())
-print_board(up())
+print(backtracking(0, data, 0))
