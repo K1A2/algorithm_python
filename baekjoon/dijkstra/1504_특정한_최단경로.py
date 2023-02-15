@@ -27,21 +27,21 @@ def dijkstra(start, distance, to):
                 distance[i[0]] = cost
                 heapq.heappush(q, (cost, i[0]))
     return distance[to]
-result1 = result2 = 0
+result1_c = result2_c = 0
 for i in range(len(start1) - 1):
-    if result1 != INF:
+    if result1_c != INF:
         a = dijkstra(start1[i], distance[:], start1[i + 1])
         if a == INF:
-            result1 = INF
-            continue
-        result1 += a
-    if result2 != INF:
+            result1_c = INF
+        else:
+            result1_c += a
+    if result2_c != INF:
         a = dijkstra(start2[i], distance[:], start2[i + 1])
         if a == INF:
-            result2 = INF
-            continue
-        result2 += a
-if result2 == INF and result1 == INF:
+            result2_c = INF
+        else:
+            result2_c += a
+if result2_c == INF and result1_c == INF:
     print(-1)
 else:
-    print(min(result1, result2))
+    print(min(result1_c, result2_c))
