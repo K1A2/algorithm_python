@@ -18,10 +18,11 @@ while d:
         print(sec)
         break
     for np in [pos * 2, pos + 1, pos - 1]:
-        if 0 <= np < max_len and visited[np] == -1:
+        if 0 <= np < max_len:
             ns = sec + (0 if pos * 2 == np else 1)
-            visited[np] = min(visited[np], ns) if visited[np] != -1 else ns
-            if pos * 2 == np:
-                d.appendleft((np, ns))
-            else:
-                d.append((np, ns))
+            if visited[np] == -1 or ns < visited[np]:
+                visited[np] = min(visited[np], ns) if visited[np] != -1 else ns
+                if pos * 2 == np:
+                    d.appendleft((np, ns))
+                else:
+                    d.append((np, ns))
