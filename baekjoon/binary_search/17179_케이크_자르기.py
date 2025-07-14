@@ -22,7 +22,6 @@ for _ in range(n):
         mid = (low + high) // 2
         if check(mid, c):
             low = mid + 1
-            ans = max(ans, mid)
         else:
             high = mid - 1
-    print(ans)
+    print(high)
