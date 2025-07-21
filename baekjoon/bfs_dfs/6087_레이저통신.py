@@ -1,36 +1,43 @@
 from collections import deque
 import sys
 input = sys.stdin.readline
-m, n = map(int, input().rstrip().split())
-data = [input().rstrip() for _ in range(n)]
-visited = [[sys.maxsize] * m for _ in range(n)]
 
-dxy = ((-1, 0), (1, 0), (0, 1), (0, -1))
-def bfs(start_x, start_y):
-    q = deque()
-    q.append((start_x, start_y))
-    visited[start_x][start_y] = 0
-    res = sys.maxsize
-    while q:
-        now_x, now_y = q.popleft()
-        for d in dxy:
-            nx = now_x + d[0]
-            ny = now_y + d[1]
-            while True:
-                if not (0 <= nx < n and 0 <= ny < m): break
-                if data[nx][ny] == '*': break
-                if visited[nx][ny] < visited[now_x][now_y] + 1: break
-                if data[nx][ny] == 'C':
-                    res = min(res, visited[now_x][now_y] + 1)
+m, n = map(int, input().split())
+board = [input().rstrip() for _ in range(n)]
 
-                q.append((nx, ny))
-                visited[nx][ny] = visited[now_x][now_y] + 1
-                nx += d[0]
-                ny += d[1]
-    return res - 1
+points = [(i, j) for i in range(n) for j in range(m) if board[i][j] == 'C']
+(start_x, start_y), (end_x, end_y) = points
 
-for x in range(n):
-    for y in range(m):
-        if data[x][y] == 'C':
-            print(bfs(x, y))
-            exit()
+INF = 10e10
+visited = [[[INF] * 4 for _ in range(m)] for __ in range(n)]
+
+dq = deque()
+for d in range(4):
+    visited[start_x][start_y][d] = 0
+    dq.append((start_x, start_y, d))
+
+dxy = ((-1, 0), (1, 0), (0, -1), (0, 1))
+
+while dq:
+    x, y, dir = dq.popleft()
+    cost = visited[x][y][dir]
+    if (x, y) == (end_x, end_y):
+        print(cost)
+        sys.exit()
+
+    for nd in range(4):
+        nx = x + dxy[nd][0]
+        ny = y + dxy[nd][1]
+        if not (0 <= nx < n and 0 <= ny < m):
+            continue
+        if board[nx][ny] == '*':
+            continue
+
+        new_cost = cost + (0 if nd == dir else 1)
+        if new_cost < visited[nx][ny][nd]:
+            visited[nx][ny][nd] = new_cost
+            if nd == dir:
+                dq.appendleft((nx, ny, nd))
+            else:
+                dq.append((nx, ny, nd))
+print(-1)
